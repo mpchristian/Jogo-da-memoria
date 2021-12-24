@@ -38,6 +38,10 @@ h1, h2, #size-section, #score-section {
   margin-top: 30px;
 }
 
+#rules-section {
+  text-align: center;
+  height: 30px;
+}
 
 #wrongs-div, #rights-div, #score-div {
   display: inline-block;
