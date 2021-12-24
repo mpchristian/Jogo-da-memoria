@@ -1,0 +1,38 @@
+.pixel {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  background-image: '';
+  border: 1px solid black;
+  float: left;
+}
+
+.test{
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
+}
+
+#board {
+  display: block;
+  margin: 0 auto;
+}
+
+#main {
+  display: block;
+}
+
+h1, #size-section, #score-section {
+  text-align: center;
+  height: 50px;
+}
+
+
+#wrongs-div, #rights-div, #score-div {
+  display: inline-block;
+  margin: 0 30px 0;
+}
+
+#score-section {
+  margin: 0 auto;
+}
