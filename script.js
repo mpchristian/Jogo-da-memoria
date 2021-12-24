@@ -1,6 +1,6 @@
 // Creating the board
 
-function createLines() {
+function createLines(size) {
   let board = document.querySelector('#board');
   board.style.width = `${size * 82}px`;
   board.style.height = `${size * 82}px`;
@@ -21,8 +21,6 @@ function createCollumns(size, cont, board) {
 }
 
 // Reading the size
-let size = 2;
-let counter = 0;
 
 function createBoard(size) {
   let boardSection = document.querySelector('#board-section');
@@ -34,13 +32,13 @@ function createBoard(size) {
   boardSection.appendChild(newBoard);
 
   for (let i = 1; i <= size; i += 1) {
-    createLines();
+    createLines(size);
   }
 }
 
+let size = 2;
+let counter = 0;
 createBoard(size);
-
-
 
 // Selecting the pairs
 function selectPair(size) {
@@ -64,20 +62,18 @@ listOfPairs = selectPair(size);
 
 // Answer, putting images at right places and hiding them in arrayImages
 
-function createImages(listOfPairs,size) {
+function createImages(listOfPairs) {
   let arrayImages = [];
 
-  for (i = 0; i < listOfPairs[0].length; i += 1) {
+  for (let i = 0; i < listOfPairs[0].length; i += 1) {
     arrayImages[listOfPairs[0][i]] = `url(https://picsum.photos/200/200?random=${i + 1})`;
     arrayImages[listOfPairs[1][i]] = arrayImages[listOfPairs[0][i]];
   }
 
-  console.log(arrayImages);
-
   return arrayImages;
 }
 
-function createListImages(arrayImages,listOfPairs) {
+function createListImages(arrayImages, listOfPairs) {
   let listSection = document.querySelector('#list-section');
   let listElement = document.querySelector('#list-images');
   listSection.removeChild(listElement);
@@ -85,7 +81,7 @@ function createListImages(arrayImages,listOfPairs) {
   let newListImages = document.createElement('div');
   newListImages.id = 'list-images';
   newListImages.style.width = `${size * 42}px`;
-  newListImages.style.height = `${size/2 * 42}px`;
+  newListImages.style.height = `${size / 2 * 42}px`;
   listSection.appendChild(newListImages);
 
   // testing
@@ -94,44 +90,42 @@ function createListImages(arrayImages,listOfPairs) {
     image.style.backgroundImage = arrayImages[listOfPairs[1][i]];
     image.style.backgroundSize = '40px 40px';
     image.className = 'test';
-    let listElement = document.querySelector('#list-images');
-    listElement.appendChild(image);
+    newListImages.appendChild(image);
   }
 }
 
+arrayImages = createImages(listOfPairs);
 
-arrayImages = createImages(listOfPairs,size);
-console.log(arrayImages);
-
-
-createListImages(arrayImages,listOfPairs);
-
+createListImages(arrayImages, listOfPairs);
 
 // pint the selected pixels
 function pintSelected(arrayImages) {
   selectedOnes = document.querySelectorAll('.selected');
   numberSelected = selectedOnes.length;
-  console.log(numberSelected);
 
-  // if there are 2 selected pixels
   if (numberSelected === 2) {
-    let pixel1 = selectedOnes[0];
-    pixel1.style.backgroundImage = arrayImages[parseInt(pixel1.id)];
-    let pixel2 = selectedOnes[1];
-    pixel2.style.backgroundImage = arrayImages[parseInt(pixel2.id)];
+    // if there are 2 selected pixels
+    for (let i = 0; i < numberSelected; i += 1) {
+      let pixel = selectedOnes[i];
+      console.log(pixel.id);
+      pixel.style.backgroundImage = arrayImages[0][parseInt(pixel.id)];
+    }
 
     // if they match or not
-    matchNotMatch(pixel1, pixel2);
+    matchNotMatch(selectedOnes[0], selectedOnes[1]);
   }
+
 }
 
 let wrongsCounter = 0;
 let rightsCounter = 0;
 updateScore(wrongsCounter, rightsCounter, size);
 
-
 function matchNotMatch(pixel1, pixel2) {
   // if they match
+  console.log(arrayImages[parseInt(pixel1.id)]);
+  console.log(arrayImages[parseInt(pixel2.id)]);
+
   if (arrayImages[parseInt(pixel1.id)] === arrayImages[parseInt(pixel2.id)]) {
     pixel1.classList.add('matched');
     pixel2.classList.add('matched');
@@ -165,10 +159,10 @@ function updateScore(wrongsCounter, rightsCounter, size) {
   scoreElement.innerText = `${Math.ceil(result)} / ${100 * size * 2}`;
 
   // End message
-  if (rightsCounter*2 === size**2) {
+  if (rightsCounter * 2 === size ** 2) {
     setTimeout(function () {
       alert('Congrats! You won!');
-    },1000);
+    }, 1000);
   }
 
 }
@@ -198,32 +192,31 @@ function addSelectingEvent(arrayImages) {
   let board = document.querySelector('#board');
   board.addEventListener('click', function (event) {
     console.log(event.target.style.backgroundImage);
-    if (numberSelected <= 1) {
+    if (numberSelected <= 1 && event.target.style.backgroundImage === '') {
       event.target.classList.add('selected');
       event.target.style.backgroundImage = arrayImages[parseInt(event.target.id)];
       numberSelected += 1;
     }
 
     // pint the selected pixels
-
     pintSelected(arrayImages);
   });
-
 }
 
-
 addSelectingEvent(arrayImages);
-
 
 let goButton = document.querySelector('#go-button');
 goButton.addEventListener('click', function () {
   let sizeButton = document.querySelector('#size-board');
-  size = sizeButton.value;
-
-  updateScore(0, 0, size);
+  size = parseInt(sizeButton.value);
+  counter = 0;
+  wrongsCounter = 0;
+  rightsCounter = 0;
+  updateScore(wrongsCounter, rightsCounter, size);
   createBoard(size);
   listOfPairs = selectPair(size);
-  arrayImages = createImages(listOfPairs, size);
-  createListImages(arrayImages,listOfPairs);
+  arrayImages = createImages(listOfPairs);
+  console.log(arrayImages);
+  createListImages(arrayImages, listOfPairs);
   addSelectingEvent(arrayImages);
 });
