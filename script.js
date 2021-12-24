@@ -25,6 +25,14 @@ let size = 4;
 let counter = 0;
 
 function createBoard(size) {
+  let boardSection = document.querySelector('#board-section');
+  let boardElement = document.querySelector('#board');
+  boardSection.removeChild(boardElement);
+
+  let newBoard = document.createElement('div');
+  newBoard.id = 'board';
+  boardSection.appendChild(newBoard);
+
   for (let i = 1; i <= size; i += 1) {
     createLines();
   }
@@ -56,7 +64,7 @@ listOfPairs = selectPair(size);
 
 // Answer, putting images at right places and hiding them in arrayImages
 
-function createImages(listOfPairs) {
+function createImages(listOfPairs,size) {
   let arrayImages = [];
 
   for (i = 0; i < listOfPairs[0].length; i += 1) {
@@ -66,20 +74,37 @@ function createImages(listOfPairs) {
 
   console.log(arrayImages);
 
+  return arrayImages;
+}
+
+function createListImages(arrayImages,listOfPairs) {
+  let listSection = document.querySelector('#list-section');
+  let listElement = document.querySelector('#list-images');
+  listSection.removeChild(listElement);
+
+  let newListImages = document.createElement('div');
+  newListImages.id = 'list-images';
+  newListImages.style.width = `${size * 42}px`;
+  newListImages.style.height = `${size/2 * 42}px`;
+  listSection.appendChild(newListImages);
+
   // testing
   for (let i = 0; i < listOfPairs[0].length; i += 1) {
     let image = document.createElement('div');
     image.style.backgroundImage = arrayImages[listOfPairs[1][i]];
+    image.style.backgroundSize = '40px 40px';
     image.className = 'test';
-    let main = document.querySelector('#main');
-    main.appendChild(image);
+    let listElement = document.querySelector('#list-images');
+    listElement.appendChild(image);
   }
-
-  return arrayImages;
 }
 
-arrayImages = createImages(listOfPairs);
+
+arrayImages = createImages(listOfPairs,size);
 console.log(arrayImages);
+
+
+createListImages(arrayImages,listOfPairs);
 
 
 // pint the selected pixels
@@ -102,6 +127,7 @@ function pintSelected(arrayImages) {
 
 let wrongsCounter = 0;
 let rightsCounter = 0;
+updateScore(wrongsCounter, rightsCounter, size);
 
 
 function matchNotMatch(pixel1, pixel2) {
@@ -135,7 +161,7 @@ function updateScore(wrongsCounter, rightsCounter, size) {
   wrongsElement.innerText = wrongsCounter;
   rightsElement.innerText = rightsCounter;
 
-  let result =  100 * rightsCounter - 10 * wrongsCounter;
+  let result = 100 * rightsCounter - 10 * wrongsCounter;
   scoreElement.innerText = `${Math.ceil(result)} / ${100 * size * 2}`;
 }
 
@@ -184,16 +210,11 @@ let goButton = document.querySelector('#go-button');
 goButton.addEventListener('click', function () {
   let sizeButton = document.querySelector('#size-board');
   size = sizeButton.value;
-  let mainElement = document.querySelector('main');
-  let boardElement = document.querySelector('#board');
-  mainElement.removeChild(boardElement);
 
-  let newBoard = document.createElement('section');
-  newBoard.id = 'board';
-  mainElement.appendChild(newBoard);
-
+  updateScore(0, 0, size);
   createBoard(size);
   listOfPairs = selectPair(size);
-  arrayImages = createImages(listOfPairs);
+  arrayImages = createImages(listOfPairs, size);
+  createListImages(arrayImages,listOfPairs);
   addSelectingEvent(arrayImages);
 });

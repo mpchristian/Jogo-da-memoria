@@ -1,6 +1,7 @@
 .pixel {
   width: 80px;
   height: 80px;
+  background-size: 80px 80px;
   background-color: white;
   background-image: '';
   border: 1px solid black;
@@ -8,9 +9,10 @@
 }
 
 .test{
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   border: 1px solid black;
+  float: left;
 }
 
 #board {
@@ -18,13 +20,17 @@
   margin: 0 auto;
 }
 
-#main {
-  display: block;
+#list-images {
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 300px;
+  border: 3px solid red;
 }
 
-h1, #size-section, #score-section {
+h1, h2, #size-section, #score-section {
   text-align: center;
   height: 50px;
+  margin-top: 30px;
 }
 
 
