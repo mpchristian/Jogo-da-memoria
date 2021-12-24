@@ -21,7 +21,7 @@ function createCollumns(size, cont, board) {
 }
 
 // Reading the size
-let size = 4;
+let size = 2;
 let counter = 0;
 
 function createBoard(size) {
@@ -135,12 +135,12 @@ function matchNotMatch(pixel1, pixel2) {
   if (arrayImages[parseInt(pixel1.id)] === arrayImages[parseInt(pixel2.id)]) {
     pixel1.classList.add('matched');
     pixel2.classList.add('matched');
-    console.log('acertou');
+    console.log('Good job!');
     addSelectingEvent(arrayImages);
     rightsCounter += 1;
 
   } else {
-    console.log('errou');
+    console.log('Sorry, dude. Try again.');
     wrongsCounter += 1;
     resetTheWrong(pixel1, pixel2);
   }
@@ -163,11 +163,19 @@ function updateScore(wrongsCounter, rightsCounter, size) {
 
   let result = 100 * rightsCounter - 10 * wrongsCounter;
   scoreElement.innerText = `${Math.ceil(result)} / ${100 * size * 2}`;
+
+  // End message
+  if (rightsCounter*2 === size**2) {
+    setTimeout(function () {
+      alert('Congrats! You won!');
+    },1000);
+  }
+
 }
 
 function resetTheWrong(pixel1, pixel2) {
   setTimeout(function () {
-    alert('Errou');
+    alert('Sorry, dude. Try again.');
     // remove selected class name of the matched
     pixel1.style.backgroundImage = '';
     pixel2.style.backgroundImage = '';
@@ -200,11 +208,12 @@ function addSelectingEvent(arrayImages) {
 
     pintSelected(arrayImages);
   });
+
 }
+
 
 addSelectingEvent(arrayImages);
 
-//
 
 let goButton = document.querySelector('#go-button');
 goButton.addEventListener('click', function () {

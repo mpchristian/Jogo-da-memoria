@@ -1,3 +1,7 @@
+body {
+  background-color: honeydew;
+}
+
 .pixel {
   width: 80px;
   height: 80px;
@@ -18,13 +22,14 @@
 #board {
   display: block;
   margin: 0 auto;
+  border: 3px solid black;
 }
 
 #list-images {
   text-align: center;
   margin: 0 auto;
   margin-bottom: 300px;
-  border: 3px solid red;
+  border: 3px solid black;
 }
 
 h1, h2, #size-section, #score-section {
@@ -41,4 +46,8 @@ h1, h2, #size-section, #score-section {
 
 #score-section {
   margin: 0 auto;
+}
+
+#wrongs-score, #rights-score, #score {
+  font-weight: bold;
 }
