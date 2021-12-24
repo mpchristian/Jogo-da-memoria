@@ -161,7 +161,7 @@ function updateScore(wrongsCounter, rightsCounter, size) {
   wrongsElement.innerText = wrongsCounter;
   rightsElement.innerText = rightsCounter;
 
-  let result = 100 * rightsCounter - 10 * wrongsCounter;
+  let result = 100 * rightsCounter * 2 - 10 * wrongsCounter;
   scoreElement.innerText = `${Math.ceil(result)} / ${100 * size * 2}`;
 
   // End message
