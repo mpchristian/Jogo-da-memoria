@@ -155,14 +155,14 @@ function updateScore(wrongsCounter, rightsCounter, size) {
   wrongsElement.innerText = wrongsCounter;
   rightsElement.innerText = rightsCounter;
 
-  let result = 100 * rightsCounter * 2 - 10 * wrongsCounter;
-  scoreElement.innerText = `${Math.ceil(result)} / ${100 * size * 2}`;
+  let result = (100 * rightsCounter) - (10 * wrongsCounter);
+  scoreElement.innerText = `${Math.ceil(result)} / ${100 * size ** 2/2 }`;
 
   // End message
   if (rightsCounter * 2 === size ** 2) {
     setTimeout(function () {
       alert('Congrats! You won!');
-    }, 1000);
+    }, 500);
   }
 
 }
@@ -174,7 +174,7 @@ function resetTheWrong(pixel1, pixel2) {
     pixel1.style.backgroundImage = '';
     pixel2.style.backgroundImage = '';
     addSelectingEvent(arrayImages);
-  }, 1000);
+  }, 500);
 }
 
 // where the game starts
