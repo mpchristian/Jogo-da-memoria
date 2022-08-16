@@ -19,7 +19,7 @@ Um algoritmo é executado para definir os pares de ids, que se referem
 
 ## Tecnologias
 
-**Fundamentos:** HTML, CSS, JavaScript
+HTML, CSS, JavaScript
 
 
 ## Rodando localmente
